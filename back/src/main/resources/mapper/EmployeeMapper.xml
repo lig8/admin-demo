@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tutorial.back.mapper.EmployeeMapper">
+    <select id="selectAll" resultType="com.tutorial.back.entity.Employee">
+        select * from employee
+    </select>
+    
+    <select id="selectById" resultType="com.tutorial.back.entity.Employee">
+        select * from employee where id = #{id}
+    </select>
+    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into employee(name, gender, en, age, descr, department)
+        values(#{name}, #{gender}, #{en}, #{age}, #{descr}, #{department})
+    </insert>
+    
+    <update id="update">
+        update employee
+        set name = #{name},
+            gender = #{gender},
+            en = #{en},
+            age = #{age},
+            descr = #{descr},
+            department = #{department}
+        where id = #{id}
+    </update>
+    
+    <delete id="deleteById">
+        delete from employee where id = #{id}
+    </delete>
+    
+    <delete id="deleteAll">
+        delete from employee
+    </delete>
+    
+    <select id="testDB" resultType="java.util.Map">
+        SELECT 
+            DATABASE() as database_name,
+            VERSION() as version,
+            USER() as user,
+            CONNECTION_ID() as connection_id,
+            (SELECT COUNT(*) FROM employee) as employee_count
+    </select>
+    
+    <select id="selectByPage" resultType="com.tutorial.back.entity.Employee">
+        select * from employee
+        limit #{pageSize} offset #{offset}
+    </select>
+    
+    <select id="selectCount" resultType="int">
+        select count(*) from employee
+    </select>
+</mapper>
