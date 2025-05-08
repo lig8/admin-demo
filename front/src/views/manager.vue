@@ -32,7 +32,7 @@ import router from "../router";
             <span>用户管理</span>
           </template>
             <el-menu-item index=""><el-icon><Apple /></el-icon>管理员信息</el-menu-item>
-            <el-menu-item index=""><el-icon><Orange /></el-icon>普通用户信息</el-menu-item>
+            <el-menu-item index="/manager/employee"><el-icon><Orange /></el-icon>员工信息</el-menu-item>
         </el-sub-menu>
         <el-menu-item index=""><el-icon><UserFilled /></el-icon>个人信息</el-menu-item>
         <el-menu-item index=""><el-icon><SwitchButton /></el-icon>退出系统</el-menu-item>

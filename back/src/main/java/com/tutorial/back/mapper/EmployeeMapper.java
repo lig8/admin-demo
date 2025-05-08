@@ -13,5 +13,6 @@ public interface EmployeeMapper {
     int deleteAll();
     Map<String, Object> testDB();
     List<Employee> selectByPage(PageQuery pageQuery);
-    int selectCount();
+    int selectCount(PageQuery pageQuery);
+    int deleteBatch(List<Integer> ids);
 }

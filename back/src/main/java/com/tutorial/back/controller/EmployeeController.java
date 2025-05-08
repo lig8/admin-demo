@@ -69,4 +69,10 @@ public class EmployeeController {
         Map<String, Object> result = employeeService.selectByPage(pageQuery);
         return Result.success(result);
     }
+    
+    @DeleteMapping("/batch")
+    public Result deleteBatch(@RequestBody List<Integer> ids) {
+        int rows = employeeService.deleteBatch(ids);
+        return Result.success(rows);
+    }
 }

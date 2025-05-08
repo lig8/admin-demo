@@ -4,10 +4,11 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {path: '/', redirect: '/manager/data'},
-        {path: '/manager', name: 'manager', component: ()=>import('../views/manager.vue'), children: [
-            {path: 'home', name: 'home_child', component: ()=>import('../views/home.vue') },
-            {path: 'test', name: 'test_child', component: ()=>import('../views/test.vue') },
-            {path: 'data', name: 'data', component: ()=>import('../views/data.vue') },
+        {path: '/manager', name: '', component: ()=>import('../views/manager.vue'), children: [
+            {path: 'home', name: '', component: ()=>import('../views/home.vue') },
+            {path: 'test', name: '', component: ()=>import('../views/test.vue') },
+            {path: 'data', name: '', component: ()=>import('../views/data.vue') },
+            {path: 'employee', name: '', component: ()=>import('../views/employee.vue') },
         ]},
         {path: '/home', name: 'home', meta: {title: '主页'},component: ()=>import('../views/home.vue')},
         {path: '/test', name: 'test', meta: {title: '测试页'}, component: ()=>import('../views/test.vue')},

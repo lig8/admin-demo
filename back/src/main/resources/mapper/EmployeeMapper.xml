@@ -47,10 +47,41 @@
     
     <select id="selectByPage" resultType="com.tutorial.back.entity.Employee">
         select * from employee
+        <where>
+            <if test="search != null and search != ''">
+                and (
+                    name like concat('%', #{search}, '%')
+                    or gender like concat('%', #{search}, '%')
+                    or en like concat('%', #{search}, '%')
+                    or age like concat('%', #{search}, '%')
+                    or descr like concat('%', #{search}, '%')
+                    or department like concat('%', #{search}, '%')
+                )
+            </if>
+        </where>
         limit #{pageSize} offset #{offset}
     </select>
     
     <select id="selectCount" resultType="int">
         select count(*) from employee
+        <where>
+            <if test="search != null and search != ''">
+                and (
+                    name like concat('%', #{search}, '%')
+                    or gender like concat('%', #{search}, '%')
+                    or en like concat('%', #{search}, '%')
+                    or age like concat('%', #{search}, '%')
+                    or descr like concat('%', #{search}, '%')
+                    or department like concat('%', #{search}, '%')
+                )
+            </if>
+        </where>
     </select>
+    
+    <delete id="deleteBatch">
+        delete from employee where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

@@ -74,7 +74,14 @@ public class EmployeeService {
     public Map<String, Object> selectByPage(PageQuery pageQuery) {
         Map<String, Object> result = new HashMap<>();
         result.put("records", employeeMapper.selectByPage(pageQuery));
-        result.put("total", employeeMapper.selectCount());
+        result.put("total", employeeMapper.selectCount(pageQuery));
         return result;
+    }
+    
+    public int deleteBatch(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) {
+            throw new RuntimeException("删除的ID列表不能为空");
+        }
+        return employeeMapper.deleteBatch(ids);
     }
 }
