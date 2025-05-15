@@ -19,7 +19,6 @@ const data = reactive({
 data.employeeList = selectAll();
 console.log('data.employeeList: ', data.employeeList);
 
-
 </script>
 
 <template>
@@ -53,7 +52,6 @@ console.log('data.employeeList: ', data.employeeList);
         />
       </div>
     </div>
-
 
   </div>
 </template>

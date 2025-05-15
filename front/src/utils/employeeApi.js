@@ -1,7 +1,5 @@
-// src/api/user.js
 import { get, post, put, del } from '@/utils/request';
 
-// 员工相关接口
 export const selectAll = () => get('/employee');
 export const selectById = (id) => get(`/employee/${id}`);
 export const retrieveById = (id) => get('/employee/id', { id });
