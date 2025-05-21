@@ -75,4 +75,18 @@ public class EmployeeController {
         int rows = employeeService.deleteBatch(ids);
         return Result.success(rows);
     }
+    
+    @GetMapping("/username/{username}")
+    public Result selectByUsername(@PathVariable String username) {
+        Employee employee = employeeService.selectByUsername(username);
+        return Result.success(employee);
+    }
+    
+    @PostMapping("/login")
+    public Result login(@RequestBody Map<String, String> loginForm) {
+        String username = loginForm.get("username");
+        String password = loginForm.get("password");
+        Employee employee = employeeService.login(username, password);
+        return Result.success(employee);
+    }
 }

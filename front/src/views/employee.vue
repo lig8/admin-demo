@@ -1,5 +1,5 @@
 <script setup>
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 import {deleteBatch, deleteById, insert, selectAll, selectByPage, update} from "@/utils/employeeApi.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {
@@ -22,10 +22,21 @@ const data = reactive({
   formVisible: false,
   form: {},
   ids: [],
+  rules:{
+    username: [{required:true,message:'请输入账号',trigger:'blur'}],
+    name: [{required:true,message:'请输入姓名',trigger:'blur'}],
+    en: [{required:true,message:'请输入工号',trigger:'blur'}],
+  },
 })
 
+const formRef = ref();
+
 const save = (row) => {
-  data.form.id ? updateEmployee() : insertEmployee();
+  formRef.value.validate((valid) => {
+    if (valid) {
+      data.form.id ? updateEmployee() : insertEmployee();
+    }
+  })
 }
 
 const insertEmployee = () => {
@@ -145,6 +156,7 @@ load();
     <div class="card" style="margin-bottom:5px">
       <el-table :data='data.tableData' stripe @selection-change="handleSelectionChange">
         <el-table-column type="selection" />
+        <el-table-column label="账号" prop="username" />
         <el-table-column label="姓名" prop="name" />
         <el-table-column label="性别" prop="gender" />
         <el-table-column label="工号" prop="en" />
@@ -170,9 +182,12 @@ load();
         />
       </div>
     </div>
-    <el-dialog v-model="data.formVisible" title="员工信息" width="500">
-      <el-form :model="data.form" label-width="80px" style="margin-right:40px">
-        <el-form-item label="姓名" >
+    <el-dialog v-model="data.formVisible" title="员工信息" width="500" destroy-on-close>
+      <el-form ref="formRef" :rules="data.rules" :model="data.form" label-width="80px" style="margin-right:40px">
+        <el-form-item label="账号" prop="username">
+          <el-input v-model="data.form.username" placeholder="请输入账号"/>
+        </el-form-item>
+        <el-form-item label="姓名" prop="name">
           <el-input v-model="data.form.name" placeholder="请输入姓名"/>
         </el-form-item>
         <el-form-item label="性别">
@@ -181,7 +196,7 @@ load();
             <el-radio value="女" label="女">女</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="工号">
+        <el-form-item label="工号" prop="en">
           <el-input v-model="data.form.en"  placeholder="请输入工号"/>
         </el-form-item>
         <el-form-item label="年龄" >

@@ -1,5 +1,10 @@
 <script setup>
 import router from "../router";
+import {reactive} from "vue";
+
+const data = reactive({
+  user: JSON.parse(localStorage.getItem("userinfo")),
+})
 </script>
 
 <template>
@@ -14,7 +19,7 @@ import router from "../router";
     <div style="flex:1;">  </div>
     <div style="width: fit-content; padding-right: 10px; display: flex; align-items: center">
       <el-image src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" alt="" style="width:40px; height:40px;"/>
-      <span style="color: white; margin-left: 5px"> 李大头 </span>
+      <span style="color: white; margin-left: 5px"> {{data.user.name}} </span>
     </div>
   </div>
   <!-- head end -->
@@ -35,7 +40,7 @@ import router from "../router";
             <el-menu-item index="/manager/employee"><el-icon><Orange /></el-icon>员工信息</el-menu-item>
         </el-sub-menu>
         <el-menu-item index=""><el-icon><UserFilled /></el-icon>个人信息</el-menu-item>
-        <el-menu-item index=""><el-icon><SwitchButton /></el-icon>退出系统</el-menu-item>
+        <el-menu-item index="/login"><el-icon><SwitchButton /></el-icon>退出系统</el-menu-item>
       </el-menu>
     </div>
     <!--  left menu end  -->

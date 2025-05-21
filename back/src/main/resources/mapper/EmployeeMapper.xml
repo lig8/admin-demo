@@ -13,13 +13,16 @@
     </select>
     
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into employee(name, gender, en, age, descr, department)
-        values(#{name}, #{gender}, #{en}, #{age}, #{descr}, #{department})
+        insert into employee(username,password,role,name, gender, en, age, descr, department)
+        values(#{username},#{password},#{role},#{name}, #{gender}, #{en}, #{age}, #{descr}, #{department})
     </insert>
     
     <update id="update">
         update employee
-        set name = #{name},
+        set username = #{username},
+            password = #{password},
+            role = #{role},
+            name = #{name},
             gender = #{gender},
             en = #{en},
             age = #{age},
@@ -84,4 +87,13 @@
             #{id}
         </foreach>
     </delete>
+    
+    <select id="selectByUsername" resultType="com.tutorial.back.entity.Employee">
+        select * from employee where username = #{username}
+    </select>
+    
+    <select id="login" resultType="com.tutorial.back.entity.Employee">
+        select * from employee 
+        where username = #{username} and password = #{password}
+    </select>
 </mapper>

@@ -2,6 +2,7 @@ package com.tutorial.back.service;
 
 import com.tutorial.back.entity.Employee;
 import com.tutorial.back.entity.PageQuery;
+import com.tutorial.back.exception.CustomException;
 import com.tutorial.back.mapper.EmployeeMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class EmployeeService {
         // 校验数据是否存在
         Employee existingEmployee = employeeMapper.selectById(employee.getId());
         if (existingEmployee == null) {
-            throw new RuntimeException("员工不存在");
+            throw new CustomException("员工不存在");
         }
         
         // 只更新变化的字段
@@ -80,8 +81,30 @@ public class EmployeeService {
     
     public int deleteBatch(List<Integer> ids) {
         if (ids == null || ids.isEmpty()) {
-            throw new RuntimeException("删除的ID列表不能为空");
+            throw new CustomException("删除的ID列表不能为空");
         }
         return employeeMapper.deleteBatch(ids);
+    }
+    
+    public Employee selectByUsername(String username) {
+        if (username == null || username.trim().isEmpty()) {
+            throw new CustomException("用户名不能为空");
+        }
+        return employeeMapper.selectByUsername(username);
+    }
+    
+    public Employee login(String username, String password) {
+        if (username == null || username.trim().isEmpty()) {
+            throw new CustomException("用户名不能为空");
+        }
+        if (password == null || password.trim().isEmpty()) {
+            throw new CustomException("密码不能为空");
+        }
+        
+        Employee employee = employeeMapper.login(username, password);
+        if (employee == null) {
+            throw new CustomException("用户名或密码错误");
+        }
+        return employee;
     }
 }

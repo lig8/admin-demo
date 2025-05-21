@@ -10,3 +10,6 @@ export const deleteBatch = (ids) => del('/employee/batch', ids);
 export const deleteAll = () => del('/employee/truncate');
 export const testDB = () => get('/employee/testDB');
 export const selectByPage = (pageQuery) => get('/employee/page', pageQuery);
+export const login = (employee) => post('/web/login', employee);
+export const regist = (employee) => post('/web/regist', employee);
+

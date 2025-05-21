@@ -1,4 +1,5 @@
 package com.tutorial.back.common;
+import com.tutorial.back.exception.CustomException;
 import lombok.Data;
 
 @Data
@@ -24,6 +25,14 @@ public class Result {
         Result result = new Result();
         result.setCode("500");
         result.setMsg("Exception Throwing !!!!!");
+        result.setData(e);
+        return result;
+    }
+
+    public static Result error(CustomException e) {
+        Result result = new Result();
+        result.setCode("500");
+        result.setMsg(e.getReason());
         result.setData(e);
         return result;
     }

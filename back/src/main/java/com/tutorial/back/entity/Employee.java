@@ -5,6 +5,9 @@ import lombok.ToString;
 @Data
 public class Employee {
     private Integer id;
+    private String username;
+    private String password;
+    private String role;
     private String name;
     private String gender;
     private String en;
