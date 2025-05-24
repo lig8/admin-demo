@@ -21,6 +21,13 @@ public class Result {
         return result;
     }
 
+    public static Result success(String msg) {
+        Result result = new Result();
+        result.setCode("200");
+        result.setMsg(msg);
+        return result;
+    }
+
     public static Result error(Exception e) {
         Result result = new Result();
         result.setCode("500");

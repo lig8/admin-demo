@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tutorial.back.mapper.AdminMapper">
+    <select id="selectAll" resultType="com.tutorial.back.entity.Admin">
+        select * from admin
+    </select>
+    
+    <select id="selectById" resultType="com.tutorial.back.entity.Admin">
+        select * from admin where id = #{id}
+    </select>
+    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into admin(username, password, role, name, en)
+        values(#{username}, #{password}, #{role}, #{name}, #{en})
+    </insert>
+    
+    <update id="update">
+        update admin
+        set username = #{username},
+            password = #{password},
+            role = #{role},
+            name = #{name},
+            en = #{en}
+        where id = #{id}
+    </update>
+    
+    <delete id="deleteById">
+        delete from admin where id = #{id}
+    </delete>
+    
+    <delete id="deleteAll">
+        delete from admin
+    </delete>
+    
+    <select id="testDB" resultType="java.util.Map">
+        SELECT 
+            DATABASE() as database_name,
+            VERSION() as version,
+            USER() as user,
+            CONNECTION_ID() as connection_id,
+            (SELECT COUNT(*) FROM admin) as admin_count
+    </select>
+    
+    <select id="selectByPage" resultType="com.tutorial.back.entity.Admin">
+        select * from admin
+        <where>
+            <if test="search != null and search != ''">
+                and (
+                    name like concat('%', #{search}, '%')
+                    or username like concat('%', #{search}, '%')
+                    or role like concat('%', #{search}, '%')
+                    or en like concat('%', #{search}, '%')
+                )
+            </if>
+        </where>
+        limit #{pageSize} offset #{offset}
+    </select>
+    
+    <select id="selectCount" resultType="int">
+        select count(*) from admin
+        <where>
+            <if test="search != null and search != ''">
+                and (
+                    name like concat('%', #{search}, '%')
+                    or username like concat('%', #{search}, '%')
+                    or role like concat('%', #{search}, '%')
+                    or en like concat('%', #{search}, '%')
+                )
+            </if>
+        </where>
+    </select>
+    
+    <delete id="deleteBatch">
+        delete from admin where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <select id="selectByUsername" resultType="com.tutorial.back.entity.Admin">
+        select * from admin where username = #{username}
+    </select>
+    
+    <select id="login" resultType="com.tutorial.back.entity.Admin">
+        select * from admin 
+        where username = #{username} and password = #{password}
+    </select>
+</mapper> 

@@ -1,12 +1,6 @@
 <script setup>
-import {reactive, ref, nextTick} from "vue";
-import {
-  employeeDeleteBatch,
-  employeeDeleteById,
-  employeeInsert,
-  employeeSelectByPage,
-  employeeUpdate,
-} from "@/utils/employeeApi.js";
+import {reactive, ref} from "vue";
+import {adminDeleteBatch, adminDeleteById, adminInsert, adminSelectByPage, adminUpdate} from "@/utils/adminApi.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {
   Check,
@@ -36,7 +30,6 @@ const data = reactive({
 })
 
 const formRef = ref();
-const enRef = ref();
 
 const save = (row) => {
   formRef.value.validate((valid) => {
@@ -47,7 +40,7 @@ const save = (row) => {
 }
 
 const insert = () => {
-  employeeInsert(data.form).then(res => {
+  adminInsert(data.form).then(res => {
     if (res.code === '200') {
       ElMessage.success('新增成功！！');
       data.formVisible = false;
@@ -61,7 +54,7 @@ const insert = () => {
 }
 
 const update = () => {
-  employeeUpdate(data.form).then(res => {
+  adminUpdate(data.form).then(res => {
     if (res.code === '200') {
       ElMessage.success('更新成功！！');
       data.formVisible = false;
@@ -76,7 +69,7 @@ const update = () => {
 
 const remove = (id) => {
   ElMessageBox.confirm('删除后无法恢复，您确认删除吗？','确认删除',{type:'warning'}).then(() => {
-    employeeDeleteById(id).then(res => {
+    adminDeleteById(id).then(res => {
       if (res.code === '200') {
         ElMessage.success('删除成功！！');
         load(); // 刷新数据列表
@@ -94,7 +87,7 @@ const deleteSelected = () => {
     ElMessage.warning("未选择数据");
   }else{
     ElMessageBox.confirm('删除后无法恢复，您确认删除吗？','确认删除',{type:'warning'}).then(() => {
-      employeeDeleteBatch(data.ids).then(res => {
+      adminDeleteBatch(data.ids).then(res => {
         if (res.code === '200') {
           ElMessage.success('删除成功！！');
           load(); // 刷新数据列表
@@ -132,7 +125,7 @@ const reset = () => {
 }
 
 const load = () =>{
-  employeeSelectByPage({
+  adminSelectByPage({
     pageNum: data.pageNum,
     pageSize: data.pageSize,
     search: data.search
@@ -165,11 +158,7 @@ load();
         <el-table-column type="selection" />
         <el-table-column label="账号" prop="username" />
         <el-table-column label="姓名" prop="name" />
-        <el-table-column label="性别" prop="gender" />
         <el-table-column label="工号" prop="en" />
-        <el-table-column label="年龄" prop="age" />
-        <el-table-column label="简历" prop="descr"  show-overflow-tooltip/>
-        <el-table-column label="部门" prop="department" />
         <el-table-column label="操作">
           <template #default="scope">
             <el-button type="primary" :icon="Edit" circle @click="handleEdit(scope.row)" />
@@ -197,20 +186,8 @@ load();
         <el-form-item label="姓名" prop="name">
           <el-input v-model="data.form.name" placeholder="请输入姓名"/>
         </el-form-item>
-        <el-form-item label="性别">
-          <el-radio-group v-model="data.form.gender">
-            <el-radio value="男" label="男">男</el-radio>
-            <el-radio value="女" label="女">女</el-radio>
-          </el-radio-group>
-        </el-form-item>
         <el-form-item label="工号" prop="en">
-          <el-input ref="enRef" v-model="data.form.en"  placeholder="请输入工号"/>
-        </el-form-item>
-        <el-form-item label="年龄" >
-          <el-input-number style="width: 200px" v-model="data.form.age" min="18" />
-        </el-form-item>
-        <el-form-item label="简历">
-          <el-input rows="5" type="textarea" v-model="data.form.descr"  placeholder="你是谁" />
+          <el-input v-model="data.form.en"  placeholder="请输入工号"/>
         </el-form-item>
       </el-form>
       <template #footer>

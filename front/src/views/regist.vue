@@ -27,8 +27,6 @@ const data = reactive({
   }
 });
 
-
-
 const formRef = ref();
 
 const registSystem = () => {

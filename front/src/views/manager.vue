@@ -5,6 +5,16 @@ import {reactive} from "vue";
 const data = reactive({
   user: JSON.parse(localStorage.getItem("userinfo")),
 })
+
+const logout = () =>{
+  localStorage.removeItem("userinfo");
+  router.push("/login");
+}
+
+const updateUserInfo = () => {
+  data.user = JSON.parse(localStorage.getItem("userinfo"));
+}
+
 </script>
 
 <template>
@@ -36,18 +46,19 @@ const data = reactive({
             <el-icon><user /></el-icon>
             <span>用户管理</span>
           </template>
-            <el-menu-item index=""><el-icon><Apple /></el-icon>管理员信息</el-menu-item>
+            <el-menu-item index="/manager/admin"><el-icon><Apple /></el-icon>管理员信息</el-menu-item>
             <el-menu-item index="/manager/employee"><el-icon><Orange /></el-icon>员工信息</el-menu-item>
         </el-sub-menu>
-        <el-menu-item index=""><el-icon><UserFilled /></el-icon>个人信息</el-menu-item>
-        <el-menu-item index="/login"><el-icon><SwitchButton /></el-icon>退出系统</el-menu-item>
+        <el-menu-item index="/manager/person"><el-icon><UserFilled /></el-icon>个人信息</el-menu-item>
+        <el-menu-item index="/manager/password"><el-icon><UserFilled /></el-icon>修改密码</el-menu-item>
+        <el-menu-item @click="logout"><el-icon><SwitchButton /></el-icon>退出系统</el-menu-item>
       </el-menu>
     </div>
     <!--  left menu end  -->
 
     <!--  right area start  -->
     <div style="flex: 1; width: 0; background-color: #f8f8ff; padding: 10px;">
-      <RouterView />
+      <RouterView @updateUserInfo="updateUserInfo" />
     </div>
     <!--  right area end  -->
 

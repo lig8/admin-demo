@@ -1,11 +1,14 @@
 <script setup>
 import {reactive, ref} from "vue";
 import {User,Lock} from "@element-plus/icons-vue"
-import {login} from "@/utils/employeeApi.js";
+import { employeeLogin} from "@/utils/employeeApi.js";
 import {ElMessage} from "element-plus";
+import {adminLogin} from "@/utils/adminApi.js";
 
 const data = reactive({
-  form: {},
+  form: {
+    role: 'ADMIN',
+  },
   rules:{
     username:[{required:true, message:'请输入账号',trigger:"blur"}],
     password:[{required:true, message:'请输入密码',trigger:"blur"}],
@@ -17,15 +20,28 @@ const formRef = ref();
 const loginSystem = () => {
   formRef.value.validate((valid) => {
     if (valid) {
-      login(data.form).then(res => {
-        if (res.code === '200') {
-          localStorage.setItem("userinfo", JSON.stringify(res.data));
-          ElMessage.success("登录成功")
-          location.href = "/manager/home"
-        } else {
-          ElMessage.error(res.msg );
-        }
-      });
+      if(data.form.role == 'ADMIN'){
+        adminLogin(data.form).then(res => {
+          if (res.code === '200') {
+            localStorage.setItem("userinfo", JSON.stringify(res.data));
+            ElMessage.success("管理员登录成功")
+            location.href = "/manager/home"
+          } else {
+            ElMessage.error(res.msg );
+          }
+        });
+      }else{
+        employeeLogin(data.form).then(res => {
+          if (res.code === '200') {
+            localStorage.setItem("userinfo", JSON.stringify(res.data));
+            ElMessage.success("员工登录成功")
+            location.href = "/manager/home"
+          } else {
+            ElMessage.error(res.msg );
+          }
+        });
+      }
+
     }
   })
 }
@@ -42,6 +58,12 @@ const loginSystem = () => {
           </el-form-item>
           <el-form-item prop="password">
             <el-input show-password size="large" v-model="data.form.password" placeholder="请输入密码" prefix-icon="Lock"></el-input>
+          </el-form-item>
+          <el-form-item prop="role">
+            <el-select size="large" v-model="data.form.role">
+              <el-option value="ADMIN" label="管理员"></el-option>
+              <el-option value="EMP" label="员工"></el-option>
+            </el-select>
           </el-form-item>
           <div style="margin-bottom: 20px">
             <el-button @click="loginSystem" size="large" style="width:100%" type="primary"> 登录 </el-button>

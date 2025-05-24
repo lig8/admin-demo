@@ -37,6 +37,15 @@ public class EmployeeService {
         }
         
         // 只更新变化的字段
+        if (employee.getUsername() != null && !employee.getUsername().equals(existingEmployee.getUsername())) {
+            existingEmployee.setUsername(employee.getUsername());
+        }
+        if (employee.getPassword() != null && !employee.getPassword().equals(existingEmployee.getPassword())) {
+            existingEmployee.setPassword(employee.getPassword());
+        }
+        if (employee.getRole() != null && !employee.getRole().equals(existingEmployee.getRole())) {
+            existingEmployee.setRole(employee.getRole());
+        }
         if (employee.getName() != null && !employee.getName().equals(existingEmployee.getName())) {
             existingEmployee.setName(employee.getName());
         }
