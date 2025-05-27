@@ -4,7 +4,7 @@ spring:
 
   # DataSource Config
   datasource:
-    url: jdbc:mysql://localhost:3306/admin-demo123?characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/admin-demo?characterEncoding=utf-8
     username: root
     password: 88888888
 
