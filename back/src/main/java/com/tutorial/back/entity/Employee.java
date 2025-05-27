@@ -15,4 +15,5 @@ public class Employee {
     private Integer age;
     private String descr;
     private Integer department;
+    private String avatar;
 }

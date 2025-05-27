@@ -11,4 +11,5 @@ public class Admin {
     private String role;
     private String name;
     private String en;
+    private String avatar;
 }

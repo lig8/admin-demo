@@ -1,7 +1,7 @@
 <script setup>
 import {reactive} from "vue";
 import { Search }  from "@element-plus/icons-vue";
-import {selectAll} from "@/utils/employeeApi.js";
+import {employeeSelectAll} from "@/utils/employeeApi.js";
 
 const data = reactive({
   name: "请输入查询",
@@ -16,7 +16,7 @@ const data = reactive({
   employeeList: [],
 })
 
-data.employeeList = selectAll();
+data.employeeList = employeeSelectAll();
 console.log('data.employeeList: ', data.employeeList);
 
 </script>

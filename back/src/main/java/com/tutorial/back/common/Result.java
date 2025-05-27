@@ -28,6 +28,14 @@ public class Result {
         return result;
     }
 
+    public static Result success(Object data,String msg) {
+        Result result = new Result();
+        result.setCode("200");
+        result.setData(data);
+        result.setMsg(msg);
+        return result;
+    }
+
     public static Result error(Exception e) {
         Result result = new Result();
         result.setCode("500");

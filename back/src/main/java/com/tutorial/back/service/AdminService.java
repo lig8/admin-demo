@@ -77,6 +77,9 @@ public class AdminService {
         if (admin.getEn() != null && !admin.getEn().equals(existingAdmin.getEn())) {
             existingAdmin.setEn(admin.getEn());
         }
+        if (admin.getAvatar() != null && !admin.getAvatar().equals(existingAdmin.getAvatar())) {
+            existingAdmin.setAvatar(admin.getAvatar());
+        }
         
         adminMapper.update(existingAdmin);
         return existingAdmin;

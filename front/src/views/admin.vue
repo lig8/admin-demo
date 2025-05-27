@@ -124,6 +124,12 @@ const reset = () => {
   load();
 }
 
+const handleAvatarSuccess = (res) => {
+  console.log(res);
+  data.form.avatar = res.data;
+}
+
+
 const load = () =>{
   adminSelectByPage({
     pageNum: data.pageNum,
@@ -157,6 +163,11 @@ load();
       <el-table :data='data.tableData' stripe @selection-change="handleSelectionChange">
         <el-table-column type="selection" />
         <el-table-column label="账号" prop="username" />
+        <el-table-column label="头像" >
+          <template #default="scope">
+            <img v-if="scope.row.avatar" :src="scope.row.avatar" alt="" style="width:40px; height:40px; border-radius: 50%;">
+          </template>
+        </el-table-column>
         <el-table-column label="姓名" prop="name" />
         <el-table-column label="工号" prop="en" />
         <el-table-column label="操作">
@@ -180,6 +191,16 @@ load();
     </div>
     <el-dialog v-model="data.formVisible" title="员工信息" width="500" destroy-on-close>
       <el-form ref="formRef" :rules="data.rules" :model="data.form" label-width="80px" style="margin-right:40px">
+        <div style="width: 100%; display: flex; justify-content: center; margin-bottom: 20px">
+          <el-upload
+              class="avatar-uploader"
+              action="http://localhost:8080/files/upload"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess">
+            <img v-if="data.form.avatar" :src="data.form.avatar" class="avatar" />
+            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+          </el-upload>
+        </div>
         <el-form-item label="账号" prop="username">
           <el-input v-model="data.form.username" placeholder="请输入账号"/>
         </el-form-item>
@@ -202,5 +223,32 @@ load();
 </template>
 
 <style scoped>
+.avatar-uploader .avatar {
+  width: 120px;
+  height: 120px;
+  display: block;
+}
+</style>
 
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 120px;
+  height: 120px;
+  text-align: center;
+}
 </style>

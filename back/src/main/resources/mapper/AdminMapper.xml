@@ -13,8 +13,8 @@
     </select>
     
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into admin(username, password, role, name, en)
-        values(#{username}, #{password}, #{role}, #{name}, #{en})
+        insert into admin(username, password, role, name, en, avatar)
+        values(#{username}, #{password}, #{role}, #{name}, #{en}, #{avatar})
     </insert>
     
     <update id="update">
@@ -23,7 +23,8 @@
             password = #{password},
             role = #{role},
             name = #{name},
-            en = #{en}
+            en = #{en},
+            avatar = #{avatar}
         where id = #{id}
     </update>
     

@@ -14,3 +14,6 @@ export const employeeLogin = (employee) => post('/employee/login', employee);
 export const employeeRegist = (employee) => post('/employee/regist', employee);
 export const employeeUpdatePass = (updatePass) => post('/employee/updatePass', updatePass);
 
+
+export const updateFile = (formData) => post('/files/upload', formData);
+

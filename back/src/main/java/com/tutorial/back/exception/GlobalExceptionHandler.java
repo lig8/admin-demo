@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
+
 @ControllerAdvice("com.tutorial.back.controller")
 public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)

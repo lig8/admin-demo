@@ -12,6 +12,7 @@ const router = createRouter({
             {path: 'admin', name: '', component: ()=>import('../views/admin.vue') },
             {path: 'person', name: '', component: ()=>import('../views/person.vue') },
             {path: 'password', name: '', component: ()=>import('../views/password.vue') },
+            {path: 'files', name: '', component: ()=>import('../views/files.vue') },
         ]},
         {path: '/home', name: 'home', meta: {title: '主页'},component: ()=>import('../views/home.vue')},
         {path: '/test', name: 'test', meta: {title: '测试页'}, component: ()=>import('../views/test.vue')},

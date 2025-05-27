@@ -64,6 +64,9 @@ public class EmployeeService {
         if (employee.getDepartment() != null && !employee.getDepartment().equals(existingEmployee.getDepartment())) {
             existingEmployee.setDepartment(employee.getDepartment());
         }
+        if (employee.getAvatar() != null && !employee.getAvatar().equals(existingEmployee.getAvatar())) {
+            existingEmployee.setAvatar(employee.getAvatar());
+        }
         
         employeeMapper.update(existingEmployee);
         return existingEmployee;

@@ -43,4 +43,4 @@ export const get = (url, params) => request.get(url, { params });
 export const post = (url, data) => request.post(url, data);
 export const put = (url, data) => request.put(url, data);
 export const del = (url, data) => request.delete(url, { data });
-export default request
+// export default request

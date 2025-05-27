@@ -28,7 +28,7 @@ const updateUserInfo = () => {
     </div>
     <div style="flex:1;">  </div>
     <div style="width: fit-content; padding-right: 10px; display: flex; align-items: center">
-      <el-image src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" alt="" style="width:40px; height:40px;"/>
+      <el-image :src="data.user.avatar || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'" alt="" style="width:40px; height:40px; border-radius: 50%"/>
       <span style="color: white; margin-left: 5px"> {{data.user.name}} </span>
     </div>
   </div>
@@ -51,6 +51,7 @@ const updateUserInfo = () => {
         </el-sub-menu>
         <el-menu-item index="/manager/person"><el-icon><UserFilled /></el-icon>个人信息</el-menu-item>
         <el-menu-item index="/manager/password"><el-icon><UserFilled /></el-icon>修改密码</el-menu-item>
+        <el-menu-item index="/manager/files"><el-icon><UserFilled /></el-icon>文件处理</el-menu-item>
         <el-menu-item @click="logout"><el-icon><SwitchButton /></el-icon>退出系统</el-menu-item>
       </el-menu>
     </div>
