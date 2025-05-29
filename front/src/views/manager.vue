@@ -52,6 +52,7 @@ const updateUserInfo = () => {
         <el-menu-item index="/manager/person"><el-icon><UserFilled /></el-icon>个人信息</el-menu-item>
         <el-menu-item index="/manager/password"><el-icon><UserFilled /></el-icon>修改密码</el-menu-item>
         <el-menu-item index="/manager/files"><el-icon><UserFilled /></el-icon>文件处理</el-menu-item>
+        <el-menu-item index="/manager/article"><el-icon><Reading /></el-icon>文章管理</el-menu-item>
         <el-menu-item @click="logout"><el-icon><SwitchButton /></el-icon>退出系统</el-menu-item>
       </el-menu>
     </div>

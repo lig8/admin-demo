@@ -10,6 +10,11 @@ import {
   Star,
 } from '@element-plus/icons-vue'
 
+import '@wangeditor/editor/dist/css/style.css'
+import {onBeforeUnmount, ref, shallowRef} from "vue";
+import {Editor, Toolbar} from '@wangeditor/editor-for-vue'
+
+
 const data = reactive({
   box: {
     width: '100px',

@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/files")
@@ -70,9 +70,11 @@ public class FileController {
             }
 
             // 生成唯一文件名
-            String originalFilename = file.getOriginalFilename();
-            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-            String newFilename = UUID.randomUUID().toString() + extension;
+            String fileName = file.getOriginalFilename();
+            String extension = fileName.substring(fileName.lastIndexOf("."));
+            String nameWithoutExtension = fileName.substring(0, fileName.lastIndexOf("."));
+            String shortUUID = UUID.randomUUID().toString().substring(0, 11);
+            String newFilename = nameWithoutExtension + "_" + shortUUID + extension;
 
             // 保存文件
             Path filePath = uploadPath.resolve(newFilename);
@@ -84,6 +86,46 @@ public class FileController {
         } catch (IOException e) {
             throw new CustomException("文件上传失败");
         }
+    }
+
+    @PostMapping("/wang/upload")
+    public Map<String,Object> wangUpload(@RequestParam MultipartFile file) {
+        // 创建上传目录
+        Path uploadPath = Paths.get(uploadDir);
+        if (!Files.exists(uploadPath)) {
+            try {
+                Files.createDirectories(uploadPath);
+            } catch (IOException e) {
+                throw new CustomException("新建目录失败");
+            }
+        }
+
+        // 生成唯一文件名
+        String fileName = file.getOriginalFilename();
+        String extension = fileName.substring(fileName.lastIndexOf("."));
+//        String nameWithoutExtension = fileName.substring(0, fileName.lastIndexOf("."));
+        String shortUUID = UUID.randomUUID().toString().substring(0, 11);
+        String newFilename = "wang" + "_" + shortUUID + extension;
+
+        // 保存文件
+        Path filePath = uploadPath.resolve(newFilename);
+
+        try {
+            Files.copy(file.getInputStream(), filePath);
+            Console.log("upload:" + filePath);
+        } catch (IOException e) {
+            throw new CustomException("文件上传失败");
+        }
+        String url = "http://localhost:8080/files/download/" + newFilename;
+        Map<String, Object> resMap = new HashMap<>();
+        List<Map<String, Object>> list = new ArrayList<>();
+        Map<String, Object> urlMap = new HashMap<>();
+        urlMap.put("url", url);
+        list.add(urlMap);
+        resMap.put("data", list);
+        resMap.put("errno", 0);
+
+        return resMap;
     }
 
     @GetMapping("/DL/{filename}")
